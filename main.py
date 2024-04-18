@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Person(BaseModel):
-    name: str
-    age: int
+    name: str = Field(default="Undefined", min_length=3, max_length=20)
+    age: int = Field(default=18, ge=18, lt=111)
 
 
 app = FastAPI()
