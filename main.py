@@ -1,14 +1,15 @@
-from fastapi import FastAPI, Response, Path
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, Body
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
 
-@app.get("/users/{id}", status_code=200)
-def users(response: Response, id: int = Path()):
-    if id < 1:
-        response.status_code = 400
-        return {"message": "Incorrect Data"}
-    return {"message": f"Id = {id}"}
+@app.get("/")
+def root():
+    return FileResponse("public/index.html")
 
-app.mount("/static", StaticFiles(directory="public", html=True))
+
+@app.post("/hello")
+def hello(name: str = Body(embed=True, min_length=3, max_length=20),
+          age: int = Body(embed=True, ge=18, lt=111)):
+    return {"message": f"{name}, ваш возраст - {age}"}
