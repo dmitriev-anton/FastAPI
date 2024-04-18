@@ -1,12 +1,14 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
+from fastapi.responses import PlainTextResponse, JSONResponse, HTMLResponse
 
 app = FastAPI()
 
 
-@app.get("/")
-def root():
-    data = {"message": "Hello METANIT.COM"}
-    json_data = jsonable_encoder(data)
-    return JSONResponse(content=json_data)
+@app.get("/text", response_class=PlainTextResponse)
+def root_text():
+    return "Hello METANIT.COM"
+
+
+@app.get("/html", response_class=HTMLResponse)
+def root_html():
+    return "<h2>Hello METANIT.COM</h2>"
