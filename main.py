@@ -1,13 +1,8 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI
 
 app = FastAPI()
 
 
-@app.get("/users/{name}/{age}")
-def users(name: str = Path(min_length=3, max_length=20),
-          age: int = Path(ge=18, lt=111)):
-    return {"name": name, "age": age}
-
-@app.get("/users/{phone}")
-def users(phone:str  = Path(pattern=r"^\d{10}$")):
-    return {"phone": phone}
+@app.get("/users")
+def get_model(name: str, age: int = 18):
+    return {"user_name": name, "user_age": age}
