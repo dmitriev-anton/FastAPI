@@ -1,5 +1,12 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from pydantic import BaseModel
+
+
+class Person(BaseModel):
+    name: str
+    age: int
+
 
 app = FastAPI()
 
@@ -10,6 +17,5 @@ def root():
 
 
 @app.post("/hello")
-def hello(name: str = Body(embed=True, min_length=3, max_length=20),
-          age: int = Body(embed=True, ge=18, lt=111)):
-    return {"message": f"{name}, ваш возраст - {age}"}
+def hello(person: Person):
+    return {"message": f"Привет, {person.name}, твой возраст - {person.age}"}
