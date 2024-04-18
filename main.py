@@ -10,6 +10,6 @@ def root():
 
 
 @app.post("/postdata")
-def postdata(username: str = Form(default="Undefined", min_length=2, max_length=20),
-             userage: int = Form(default=18, ge=18, lt=111)):
-    return {"name": username, "age": userage}
+def postdata(username: str = Form(),
+             languages: list = Form()):
+    return {"name": username, "languages": languages}
